@@ -7,8 +7,6 @@ const App: React.FC = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   
-  // Preload logic could go here if using images, but we use code-components.
-
   const currentSlide = SLIDES[currentSlideIndex];
   const isFirstSlide = currentSlideIndex === 0;
   const isLastSlide = currentSlideIndex === SLIDES.length - 1;
@@ -48,7 +46,6 @@ const App: React.FC = () => {
     if (contentPanel) {
       contentPanel.scrollTop = 0;
     }
-    // Also scroll window to top for mobile
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentSlideIndex]);
 
@@ -64,10 +61,10 @@ const App: React.FC = () => {
       <div className="relative z-10 w-full md:max-w-6xl md:h-[85vh] bg-white md:rounded-3xl shadow-none md:shadow-2xl flex flex-col md:flex-row overflow-hidden md:overflow-hidden">
         
         {/* Left Panel: Content */}
-        <div id="content-panel" className="w-full md:w-1/2 p-6 pt-24 md:p-12 flex flex-col justify-center relative bg-white md:overflow-y-auto scrollbar-hide shrink-0 order-1">
+        <div id="content-panel" className="w-full md:w-1/2 flex flex-col relative bg-white md:overflow-y-auto scrollbar-hide shrink-0 order-1 h-full">
           
-          {/* Header / Progress */}
-          <div className="absolute top-6 left-6 right-6 md:top-8 md:left-8 md:right-8 flex justify-between items-center text-gray-400 text-xs md:text-sm font-medium tracking-widest uppercase z-20">
+          {/* Header - Now part of the flow to prevent overlap */}
+          <div className="px-6 pt-6 pb-2 md:px-12 md:pt-12 md:pb-4 flex justify-between items-center text-gray-400 text-xs md:text-sm font-medium tracking-widest uppercase z-20 shrink-0">
             <span>Guía Paysend</span>
             <div className="flex gap-1">
                {SLIDES.map((_, idx) => (
@@ -79,57 +76,59 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Slide Content with Transition Key */}
-          <div key={currentSlide.id} className="mt-2 md:mt-0 animate-fadeIn pb-6 md:pb-0">
-            <span className="inline-block px-3 py-1 bg-violet-100 text-[#5d2cff] rounded-full text-xs font-bold mb-4 uppercase tracking-wider">
-               {currentSlide.type === 'intro' ? 'Inicio' : currentSlide.type === 'success' ? 'Finalizado' : `Paso ${currentSlideIndex}`}
-            </span>
-            
-            <h1 className="text-2xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-              {currentSlide.title}
-            </h1>
-            
-            {currentSlide.subtitle && (
-              <h2 className="text-lg md:text-xl text-[#5d2cff] font-semibold mb-6">
-                {currentSlide.subtitle}
-              </h2>
-            )}
-
-            <div className="space-y-4 text-gray-600 text-base md:text-lg leading-relaxed">
-              {currentSlide.content.map((text, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  {currentSlide.type !== 'intro' && <div className="mt-1.5 min-w-[6px] h-[6px] rounded-full bg-[#5d2cff]"></div>}
-                  <p dangerouslySetInnerHTML={{ 
-                      __html: text.replace(/\*\*(.*?)\*\*/g, '<span class="font-bold text-gray-800">$1</span>') 
-                    }} 
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Actions */}
-            <div className="mt-8 md:mt-12 flex gap-4">
-                {currentSlide.type === 'intro' ? (
-                     <button onClick={handleNext} className="w-full md:w-auto group flex items-center justify-center gap-2 bg-[#5d2cff] hover:bg-[#4b1fd6] text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-violet-300 transform hover:-translate-y-1">
-                        Comenzar Guía
-                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                     </button>
-                ) : currentSlide.type === 'success' ? (
-                     <button onClick={handleRestart} className="w-full md:w-auto flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg transform hover:-translate-y-1">
-                        <RefreshCcw size={20} />
-                        Reiniciar
-                     </button>
-                ) : (
-                    <div className="flex gap-3 md:gap-4 w-full md:w-auto">
-                        <button onClick={handlePrev} className="flex-1 md:flex-none px-4 md:px-6 py-3 border-2 border-gray-200 rounded-xl hover:bg-gray-50 text-gray-600 font-bold transition-colors">
-                            Atrás
-                        </button>
-                        <button onClick={handleNext} className="flex-1 md:flex-none px-6 md:px-8 py-3 bg-[#5d2cff] text-white rounded-xl font-bold shadow-lg shadow-violet-200 hover:bg-[#4b1fd6] transition-all flex items-center justify-center gap-2">
-                            Siguiente
-                            <ChevronRight size={18} />
-                        </button>
-                    </div>
+          {/* Slide Content */}
+          <div key={currentSlide.id} className="flex-1 px-6 md:px-12 pb-12 flex flex-col justify-center animate-fadeIn">
+            <div className="mt-2">
+                <span className="inline-block px-3 py-1 bg-violet-100 text-[#5d2cff] rounded-full text-xs font-bold mb-4 uppercase tracking-wider">
+                {currentSlide.type === 'intro' ? 'Inicio' : currentSlide.type === 'success' ? 'Finalizado' : `Paso ${currentSlideIndex}`}
+                </span>
+                
+                <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+                {currentSlide.title}
+                </h1>
+                
+                {currentSlide.subtitle && (
+                <h2 className="text-lg md:text-xl text-[#5d2cff] font-semibold mb-6">
+                    {currentSlide.subtitle}
+                </h2>
                 )}
+
+                <div className="space-y-4 text-gray-600 text-base md:text-lg leading-relaxed mb-8">
+                {currentSlide.content.map((text, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
+                    {currentSlide.type !== 'intro' && <div className="mt-2 min-w-[6px] h-[6px] rounded-full bg-[#5d2cff] shrink-0"></div>}
+                    <p dangerouslySetInnerHTML={{ 
+                        __html: text.replace(/\*\*(.*?)\*\*/g, '<span class="font-bold text-gray-800">$1</span>') 
+                        }} 
+                    />
+                    </div>
+                ))}
+                </div>
+
+                {/* Actions */}
+                <div className="mt-auto md:mt-8 flex gap-4">
+                    {currentSlide.type === 'intro' ? (
+                        <button onClick={handleNext} className="w-full md:w-auto group flex items-center justify-center gap-2 bg-[#5d2cff] hover:bg-[#4b1fd6] text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg hover:shadow-violet-300 transform hover:-translate-y-1">
+                            Comenzar Guía
+                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    ) : currentSlide.type === 'success' ? (
+                        <button onClick={handleRestart} className="w-full md:w-auto flex items-center justify-center gap-2 bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg transform hover:-translate-y-1">
+                            <RefreshCcw size={20} />
+                            Reiniciar
+                        </button>
+                    ) : (
+                        <div className="flex gap-3 md:gap-4 w-full md:w-auto">
+                            <button onClick={handlePrev} className="flex-1 md:flex-none px-4 md:px-6 py-3 border-2 border-gray-200 rounded-xl hover:bg-gray-50 text-gray-600 font-bold transition-colors">
+                                Atrás
+                            </button>
+                            <button onClick={handleNext} className="flex-1 md:flex-none px-6 md:px-8 py-3 bg-[#5d2cff] text-white rounded-xl font-bold shadow-lg shadow-violet-200 hover:bg-[#4b1fd6] transition-all flex items-center justify-center gap-2">
+                                Siguiente
+                                <ChevronRight size={18} />
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
           </div>
         </div>

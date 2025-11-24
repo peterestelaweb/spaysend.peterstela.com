@@ -19,7 +19,7 @@ export const SLIDES: SlideContent[] = [
   {
     id: 'step-1',
     title: 'La Fuente de la Verdad (Datos Bancarios)',
-    subtitle: 'Paso 0: Identificación de datos',
+    subtitle: 'Paso 1: Identificación de datos',
     content: [
       'Para enviar dinero desde España pagando con tarjeta, **NO** usamos los datos domésticos.',
       'Debemos ir estrictamente a la **Página 2** del documento de Mercury ("International Wire Details USD").',
@@ -32,11 +32,27 @@ export const SLIDES: SlideContent[] = [
     mockupType: 'pdf',
   },
   {
+    id: 'step-start',
+    title: 'Paso 2: Inicio en Paysend',
+    subtitle: 'Configuración inicial en la Web',
+    content: [
+      'Accede a <a href="https://paysend.com" target="_blank" class="text-[#5d2cff] underline font-bold hover:text-[#4b1fd6] text-xl">paysend.com</a> para comenzar.',
+      'Configura el envío de **EUR (Euros)** a **USD (Dólares)**.',
+      '**¡OJO CON EL PAÍS!** Para encontrar Estados Unidos en la lista:',
+      'No busques por "U" de USA.',
+      'Busca por la letra **"E"** de **EE.UU** (justo debajo de Ecuador).',
+      'Mira el recuadro flotante en la imagen para ver el ejemplo.',
+      'Pulsa "Iniciar transferencia" para continuar.'
+    ],
+    type: 'step',
+    mockupType: 'homepage',
+  },
+  {
     id: 'step-2',
-    title: 'Paso 1: Conexión SWIFT',
+    title: 'Paso 3: Conexión SWIFT',
     subtitle: 'Configurando la tubería correcta',
     content: [
-      'En Paysend, seleccionamos envío a **Estados Unidos**.',
+      'Ya dentro del formulario, asegúrate de que el país de destino es **Estados Unidos**.',
       'En la casilla SWIFT/BIC, introducimos el código del banco socio (Partner Bank): **CHFGUS44021**.',
       'Tipo de Cuenta: Seleccionar **"Company"**.',
       'Aviso Importante: Seleccionar siempre **"I pay all fees"** (OUR).',
@@ -48,7 +64,7 @@ export const SLIDES: SlideContent[] = [
   },
   {
     id: 'step-3',
-    title: 'Paso 2: Datos de la LLC (Beneficiario)',
+    title: 'Paso 4: Datos de la LLC (Beneficiario)',
     subtitle: 'Dirección física y cuenta',
     content: [
       'Copiamos los datos tal cual aparecen en la sección "Beneficiary" del documento bancario.',
@@ -64,7 +80,7 @@ export const SLIDES: SlideContent[] = [
   },
   {
     id: 'step-4',
-    title: 'Paso 3: Enrutamiento y Referencia',
+    title: 'Paso 5: Enrutamiento y Referencia',
     subtitle: 'Validación y Compliance',
     content: [
       '**La Clave del Éxito (ABA):** El campo más crítico es el Routing Number.',

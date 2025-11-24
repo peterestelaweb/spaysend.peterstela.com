@@ -5,7 +5,7 @@ export interface SlideContent {
   content: string[];
   highlight?: string[]; // Keys to highlight in the mockup
   type: 'intro' | 'step' | 'success';
-  mockupType: 'none' | 'pdf' | 'form' | 'success';
+  mockupType: 'none' | 'pdf' | 'form' | 'success' | 'homepage';
 }
 
 export interface FormState {

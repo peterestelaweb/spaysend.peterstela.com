@@ -1,9 +1,9 @@
 import React from 'react';
-import { FileText, CheckCircle, Smartphone, Building2, CreditCard, User, Hash, MapPin, Globe } from 'lucide-react';
+import { FileText, CheckCircle, Smartphone, Building2, CreditCard, User, Hash, MapPin, Globe, ChevronDown, Info, MousePointer } from 'lucide-react';
 import { MOCK_FORM_DATA } from '../constants';
 
 interface MockProps {
-  type: 'pdf' | 'form' | 'success';
+  type: 'pdf' | 'form' | 'success' | 'homepage';
   highlights?: string[];
 }
 
@@ -48,6 +48,104 @@ export const MockPDF: React.FC = () => {
       </div>
     </div>
   );
+};
+
+export const MockHomepage: React.FC = () => {
+    return (
+        <div className="w-full max-w-lg mx-auto bg-transparent relative flex flex-col items-center">
+            {/* Main Calculator Interface */}
+            <div className="w-full bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-gray-100 relative z-10">
+                {/* Navbar mimic */}
+                <div className="px-6 py-4 flex justify-between items-center border-b border-gray-50">
+                    <span className="text-[#5d2cff] font-bold tracking-widest text-lg">PAYSEND</span>
+                    <div className="w-8 h-8 rounded-full bg-[#5d2cff] text-white flex items-center justify-center text-xs">Log</div>
+                </div>
+
+                <div className="p-6 md:p-8 bg-gradient-to-br from-white to-violet-50/50">
+                    <div className="flex flex-col gap-6">
+                        {/* Heading */}
+                        <div className="text-center md:text-left mb-2">
+                            <h2 className="text-2xl font-extrabold text-gray-900 leading-tight mb-2">Enviar dinero a EE. UU.</h2>
+                            <p className="text-xs text-gray-500">Transfiere dinero en línea a cuentas bancarias.</p>
+                        </div>
+
+                        {/* Calculator Card */}
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-1 relative">
+                            {/* You Send */}
+                            <div className="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors rounded-t-lg group cursor-pointer relative overflow-hidden">
+                                <div className="absolute left-0 top-0 w-1 h-full bg-[#5d2cff] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div className="flex justify-between items-center mb-1">
+                                    <span className="text-xs text-gray-500 font-medium">Tú envías</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-2xl font-bold text-gray-800">500,00</span>
+                                    <div className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-lg transition-colors">
+                                        <span className="text-xl">🇪🇸</span>
+                                        <span className="font-bold text-gray-700">EUR</span>
+                                        <ChevronDown size={14} className="text-gray-400" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Recipient Gets */}
+                            <div className="p-4 hover:bg-gray-50 transition-colors rounded-b-lg group cursor-pointer relative overflow-hidden">
+                                <div className="absolute left-0 top-0 w-1 h-full bg-[#5d2cff] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div className="flex justify-between items-center mb-1">
+                                    <span className="text-xs text-gray-500 font-medium">El beneficiario recibe</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-2xl font-bold text-gray-800">568,42</span>
+                                    <div className="flex items-center gap-2 bg-violet-100 hover:bg-violet-200 px-2 py-1 rounded-lg transition-colors border border-violet-200 cursor-pointer">
+                                        <span className="text-xl">🇺🇸</span>
+                                        <span className="font-bold text-[#5d2cff]">USD</span>
+                                        <ChevronDown size={14} className="text-[#5d2cff]" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         {/* CTA Button */}
+                        <button className="w-full bg-[#5d2cff] text-white py-4 rounded-full font-bold shadow-lg shadow-violet-200 hover:shadow-violet-300 hover:scale-[1.02] transition-all duration-300 mt-2">
+                            Iniciar transferencia
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Country Dropdown Helper - Floating Element */}
+            <div className="absolute -bottom-16 md:-right-24 md:bottom-20 z-20 w-48 bg-white rounded-xl shadow-2xl border border-gray-200 p-0 overflow-hidden transform md:translate-x-0 translate-y-10 md:translate-y-0 animate-slideUpFade">
+                 <div className="bg-gray-50 px-3 py-2 border-b border-gray-100 text-[10px] text-gray-500 uppercase font-bold tracking-wider text-center">
+                    Lista de Países
+                 </div>
+                 <div className="max-h-40 overflow-hidden relative">
+                    {/* List Items */}
+                    <div className="px-4 py-2 flex items-center justify-between opacity-50">
+                        <div className="flex items-center gap-2"><span className="text-lg">🇦🇪</span> <span className="text-sm text-gray-600">EAU</span></div>
+                    </div>
+                    <div className="px-4 py-2 flex items-center justify-between opacity-50">
+                        <div className="flex items-center gap-2"><span className="text-lg">🇪🇨</span> <span className="text-sm text-gray-600">Ecuador</span></div>
+                    </div>
+                    {/* Highlighted EE.UU */}
+                    <div className="px-4 py-2 flex items-center justify-between bg-violet-50 border-l-4 border-[#5d2cff]">
+                        <div className="flex items-center gap-2"><span className="text-lg">🇺🇸</span> <span className="text-sm font-bold text-gray-900">EE.UU</span></div>
+                        <span className="text-[10px] text-gray-400">USD</span>
+                    </div>
+                    <div className="px-4 py-2 flex items-center justify-between opacity-50">
+                        <div className="flex items-center gap-2"><span className="text-lg">🇪🇬</span> <span className="text-sm text-gray-600">Egipto</span></div>
+                    </div>
+                    
+                    {/* Pointer */}
+                    <div className="absolute top-1/2 right-2 text-[#5d2cff] animate-pulse">
+                        <MousePointer size={16} fill="#5d2cff" />
+                    </div>
+                 </div>
+                 <div className="bg-yellow-50 p-2 text-[10px] text-yellow-800 text-center font-medium border-t border-yellow-100">
+                    💡 Truco: Busca en la "E"
+                 </div>
+            </div>
+            
+        </div>
+    );
 };
 
 export const MockForm: React.FC<{ highlights?: string[] }> = ({ highlights = [] }) => {
@@ -167,6 +265,7 @@ export const MockupContainer: React.FC<MockProps> = ({ type, highlights }) => {
     return (
         <div className="w-full h-full flex items-center justify-center p-4">
             {type === 'pdf' && <MockPDF />}
+            {type === 'homepage' && <MockHomepage />}
             {type === 'form' && <MockForm highlights={highlights} />}
             {type === 'success' && <MockSuccess />}
         </div>
